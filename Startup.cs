@@ -1,4 +1,4 @@
- using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -39,9 +39,18 @@ namespace contracted
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "contracted", Version = "v1" });
             });
             services.AddScoped<IDbConnection>(x => CreateDbConnection());
-            
+
             services.AddScoped<AccountsRepository>();
             services.AddScoped<AccountService>();
+
+            services.AddTransient<CompaniesService>();
+            services.AddTransient<CompaniesRepository>();
+
+            services.AddTransient<ContractorsRepository>();
+            services.AddTransient<ContractorsService>();
+
+            services.AddTransient<JobsRepository>();
+            services.AddTransient<JobsService>();
         }
 
         private void ConfigureCors(IServiceCollection services)
@@ -94,10 +103,10 @@ namespace contracted
             }
 
             app.UseHttpsRedirection();
-            
+
             app.UseDefaultFiles();
             app.UseStaticFiles();
-            
+
             app.UseRouting();
 
             app.UseAuthentication();
